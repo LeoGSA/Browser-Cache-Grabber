@@ -28,7 +28,7 @@
 # folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video","/music",'/html','/moof',"/doc","/pdf","/zip"]
 # At the monent:
 # "/music" means .mp3 files
-# "/video" means .mp4 and .flv files
+# "/video" means .mp4 .avi and .flv files
 # e.g. if you want .mp3 and .jpg to be grabbed, your folder_list should be: folder_list = ['','/jpg',"/music"]
 
 # save_unknown
@@ -41,13 +41,14 @@
 # clear_from_folder_afterall:
 # deletes and re-creates (clesrs) from_folder after all work is done
 
-from_folder='c:/Users/Ivan/AppData/Local/Mozilla/Firefox/Profiles/kp10flzc.default-1466620470116/cache2/entries'
+# from_folder='c:/Users/Ivan/AppData/Local/Mozilla/Firefox/Profiles/kp10flzc.default-1466620470116/cache2/entries'
+from_folder='i:/66'
 to_folder='i:/32-new'
 min_size=26000
 folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video"]
 save_unknown = False
 print_unknown_header = False
-clear_from_folder_afterall = True
+clear_from_folder_afterall = False
 
 #
 # NO USER SERVICEABLE PARTS BELOW HERE...
@@ -78,6 +79,7 @@ def analize_files(from_folder, folder_list):
     ['/png', 'PNG', '/png/', '.png'],
     ['/video', 'ftyp', '/video/', '.mp4'],
     ['/video', 'FLV', '/video/', '.flv'],
+    ['/video', 'AVI LIST', '/video/', '.avi'],
     ['/music', 'ID3', '/music/', '.mp3'],
     ['/html', '!DOCTYPE html', '/html/', '.html'],
     ['/moof', 'moof', '/moof/', '.moof'],
@@ -87,7 +89,7 @@ def analize_files(from_folder, folder_list):
 
     ]
 
-    file_list=os.listdir(from_folder)
+    file_list=(d for d in os.listdir(from_folder))
 
     for i in file_list:
         if (os.path.getsize(from_folder+"/"+i))>min_size:
