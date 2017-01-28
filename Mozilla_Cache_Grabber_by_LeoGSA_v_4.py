@@ -100,7 +100,7 @@ def analize_files(from_folder, folder_list):
             with open (from_folder+"/"+i, "rb") as myfile:
                 header=str(myfile.read(24))
             for y in temp_matrix:
-                if y[0] in folder_list and y[1] in header:
+                if y[1] in header:
                     shutil.move (from_folder+"/"+i,to_folder+y[2]+i+y[3])
                     not_recognized = False
                     break
