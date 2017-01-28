@@ -69,25 +69,29 @@ def make_folders(folder_list, to_folder):
 def analize_files(from_folder, folder_list):
 
     # matrix legend: [element in folder_list, header marker, subfolder for to_folder, extention]
-    matrix = [
+    full_matrix = [
 
-    ['/jpg', r'\xff\xd8\xff', '/jpg/', '.jpg'],
-    ['/jpg', 'Exif', '/jpg/', '.Jpeg'],
-    ['/jpg', 'JFIF', '/jpg/', '.Jpeg'],
-    ['/gif_87', 'GIF87', '/gif_87/', '.gif'],
-    ['/gif_89', 'GIF89', '/gif_89/', '.gif'],
-    ['/png', 'PNG', '/png/', '.png'],
-    ['/video', 'ftyp', '/video/', '.mp4'],
-    ['/video', 'FLV', '/video/', '.flv'],
-    ['/video', 'AVI LIST', '/video/', '.avi'],
-    ['/music', 'ID3', '/music/', '.mp3'],
-    ['/html', '!DOCTYPE html', '/html/', '.html'],
-    ['/moof', 'moof', '/moof/', '.moof'],
-    ['/doc', r'\xd0\xcf\x11\xe0\xa1', '/doc/', '.doc'],
-    ['/pdf', 'PDF', '/pdf/', '.pdf'],
-    ['/zip', 'PK'+r'\x03\x04', '/zip/', '.zip']
-
+        ['/jpg', r'\xff\xd8\xff', '/jpg/', '.jpg'],
+        ['/jpg', 'Exif', '/jpg/', '.Jpeg'],
+        ['/jpg', 'JFIF', '/jpg/', '.Jpeg'],
+        ['/gif_87', 'GIF87', '/gif_87/', '.gif'],
+        ['/gif_89', 'GIF89', '/gif_89/', '.gif'],
+        ['/png', 'PNG', '/png/', '.png'],
+        ['/video', 'ftyp', '/video/', '.mp4'],
+        ['/video', 'FLV', '/video/', '.flv'],
+        ['/video', 'AVI LIST', '/video/', '.avi'],
+        ['/music', 'ID3', '/music/', '.mp3'],
+        ['/html', '!DOCTYPE html', '/html/', '.html'],
+        ['/moof', 'moof', '/moof/', '.moof'],
+        ['/doc', r'\xd0\xcf\x11\xe0\xa1', '/doc/', '.doc'],
+        ['/pdf', 'PDF', '/pdf/', '.pdf'],
+        ['/zip', 'PK'+r'\x03\x04', '/zip/', '.zip']
     ]
+
+    temp_matrix=[]
+    for i in full_matrix:
+        if i[0] in folder_list:
+            temp_matrix.append(i)
 
     file_list=(d for d in os.listdir(from_folder))
 
@@ -95,7 +99,7 @@ def analize_files(from_folder, folder_list):
         if (os.path.getsize(from_folder+"/"+i))>min_size:
             with open (from_folder+"/"+i, "rb") as myfile:
                 header=str(myfile.read(24))
-            for y in matrix:
+            for y in temp_matrix:
                 if y[0] in folder_list and y[1] in header:
                     shutil.move (from_folder+"/"+i,to_folder+y[2]+i+y[3])
                     not_recognized = False
