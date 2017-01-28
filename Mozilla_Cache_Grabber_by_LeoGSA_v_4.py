@@ -87,7 +87,7 @@ def analize_files(from_folder, folder_list):
 
     ]
 
-    file_list=os.listdir(from_folder)
+    file_list=(d for d in os.listdir(from_folder))
 
     for i in file_list:
         if (os.path.getsize(from_folder+"/"+i))>min_size:
