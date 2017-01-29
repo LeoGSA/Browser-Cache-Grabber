@@ -25,7 +25,7 @@
 # in folder_list leave only those elements which you are interested in, always leave the fist blank element
 # (file types which are not in this list will not be recognized)
 # This is the example of maximum availiable list for the moment:
-# folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video","/music",'/html','/moof',"/doc","/pdf","/zip"]
+# folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video","/music",'/html',"/doc","/pdf","/zip", '/ico']
 # At the monent:
 # "/music" means .mp3 files
 # "/video" means .mp4 .avi and .flv files
@@ -41,37 +41,33 @@
 # clear_from_folder_afterall:
 # deletes and re-creates (clesrs) from_folder after all work is done
 
-# from_folder='c:/Users/Ivan/AppData/Local/Mozilla/Firefox/Profiles/kp10flzc.default-1466620470116/cache2/entries'
-from_folder='i:/66'
-to_folder='i:/32-new'
+from_folder='c:/Users/Ivan/AppData/Local/Mozilla/Firefox/Profiles/kp10flzc.default-1466620470116/cache2/entries'
+# from_folder='i:/66'
+to_folder='i:/30-new'
 min_size=26000
-folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video"]
+folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video","/music",'/html',"/doc","/pdf","/zip", '/ico']
 # folder_list = ['',"/video",'/jpg']
-save_unknown = False
-print_unknown_header = True
-clear_from_folder_afterall = False
+save_unknown = True
+print_unknown_header = False
+clear_from_folder_afterall = True
 
 #
 # NO USER SERVICEABLE PARTS BELOW HERE...
 #
-
 
 import os
 import shutil
 import sys
 from Magic_numbers import full_matrix
 import binascii
-
-
+import re
 
 def make_folders(folder_list, to_folder):
-
     for i in folder_list:
         if os.path.isdir (to_folder+i)==False:
             os.mkdir (to_folder+i)
 
 def analize_files(from_folder, folder_list):
-
     temp_matrix=[]
     for i in full_matrix:
         if i[0] in folder_list:
@@ -84,8 +80,9 @@ def analize_files(from_folder, folder_list):
             with open (from_folder+"/"+i, "rb") as myfile:
                 header=myfile.read(24)
                 header = str(binascii.hexlify(header))[2:-1]
+                # print (header)
             for y in temp_matrix:
-                if y[1] in header:
+                if re.match(y[1], header):
                     shutil.move (from_folder+"/"+i,to_folder+y[2]+i+y[3])
                     not_recognized = False
                     break
