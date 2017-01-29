@@ -33,7 +33,7 @@
 
 # save_unknown
 # if this option is set to True, unknown (unrecognized) files with size
-# bigger than min_size will be put to folder 'unknown' inside of to_folder
+# bigger than min_size will be put to to_folder directly
 
 # print_unknown_header:
 # if this option is set to True, unknown file headers will be printed during execution
@@ -45,7 +45,7 @@ from_folder='c:/Users/Ivan/AppData/Local/Mozilla/Firefox/Profiles/kp10flzc.defau
 # from_folder='i:/66'
 to_folder='i:/30-new'
 min_size=26000
-folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video","/music",'/html',"/doc","/pdf","/zip", '/ico']
+folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video"]
 # folder_list = ['',"/video",'/jpg']
 save_unknown = True
 print_unknown_header = False

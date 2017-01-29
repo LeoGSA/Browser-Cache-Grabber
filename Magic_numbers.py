@@ -7,7 +7,7 @@ full_matrix = [
     ['/png', r'89504e47', '/png/', '.png'],                             # '89504e47' = PNG
     ['/video', r'000000206674797069736f6d', '/video/', '.mp4'],         # ....ftypisom = MP4
     ['/video', r'464c56', '/video/', '.flv'],                           # '464c56' = FLV
-    ['/video', r'52494646........415649', '/video/', '.avi'],           # '52494646........415649' = RIFF    AVI
+    ['/video', r'52494646........415649', '/video/', '.avi'],           #  RIFF....AVI
     ['/music', r'494433', '/music/', '.mp3'],                           # '494433' = ID3
     ['/html', r'3c21646f63747970652068746d6c', '/html/', '.html'],      # !doctype html
     ['/html', r'3c21444f43545950452068746d6c', '/html/', '.html'],      # !DOCTYPE html
