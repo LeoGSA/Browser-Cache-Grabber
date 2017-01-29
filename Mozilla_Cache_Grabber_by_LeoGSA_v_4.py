@@ -25,7 +25,7 @@
 # in folder_list leave only those elements which you are interested in, always leave the fist blank element
 # (file types which are not in this list will not be recognized)
 # This is the example of maximum availiable list for the moment:
-# folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video","/music",'/html','/moof',"/doc","/pdf","/zip"]
+# folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video","/music",'/html',"/doc","/pdf","/zip", '/ico']
 # At the monent:
 # "/music" means .mp3 files
 # "/video" means .mp4 .avi and .flv files
@@ -41,53 +41,33 @@
 # clear_from_folder_afterall:
 # deletes and re-creates (clesrs) from_folder after all work is done
 
-# from_folder='c:/Users/Ivan/AppData/Local/Mozilla/Firefox/Profiles/kp10flzc.default-1466620470116/cache2/entries'
-from_folder='i:/66'
-to_folder='i:/32-new'
+from_folder='c:/Users/Ivan/AppData/Local/Mozilla/Firefox/Profiles/kp10flzc.default-1466620470116/cache2/entries'
+# from_folder='i:/66'
+to_folder='i:/30-new'
 min_size=26000
-folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video"]
-save_unknown = False
+folder_list = ['','/jpg',"/png","/gif_87","/gif_89","/video","/music",'/html',"/doc","/pdf","/zip", '/ico']
+# folder_list = ['',"/video",'/jpg']
+save_unknown = True
 print_unknown_header = False
-clear_from_folder_afterall = False
+clear_from_folder_afterall = True
 
 #
 # NO USER SERVICEABLE PARTS BELOW HERE...
 #
 
-
 import os
 import shutil
 import sys
-
+from Magic_numbers import full_matrix
+import binascii
+import re
 
 def make_folders(folder_list, to_folder):
-
     for i in folder_list:
         if os.path.isdir (to_folder+i)==False:
             os.mkdir (to_folder+i)
 
 def analize_files(from_folder, folder_list):
-
-    # matrix legend: [element in folder_list, header marker, subfolder for to_folder, extention]
-    full_matrix = [
-
-        ['/jpg', r'\xff\xd8\xff', '/jpg/', '.jpg'],
-        ['/jpg', 'Exif', '/jpg/', '.Jpeg'],
-        ['/jpg', 'JFIF', '/jpg/', '.Jpeg'],
-        ['/gif_87', 'GIF87', '/gif_87/', '.gif'],
-        ['/gif_89', 'GIF89', '/gif_89/', '.gif'],
-        ['/png', 'PNG', '/png/', '.png'],
-        ['/video', 'ftyp', '/video/', '.mp4'],
-        ['/video', 'FLV', '/video/', '.flv'],
-        ['/video', 'AVI LIST', '/video/', '.avi'],
-        ['/music', 'ID3', '/music/', '.mp3'],
-        ['/html', '!DOCTYPE html', '/html/', '.html'],
-        ['/moof', 'moof', '/moof/', '.moof'],
-        ['/doc', r'\xd0\xcf\x11\xe0\xa1', '/doc/', '.doc'],
-        ['/pdf', 'PDF', '/pdf/', '.pdf'],
-        ['/zip', 'PK'+r'\x03\x04', '/zip/', '.zip']
-    ]
-
     temp_matrix=[]
     for i in full_matrix:
         if i[0] in folder_list:
@@ -98,9 +78,11 @@ def analize_files(from_folder, folder_list):
     for i in file_list:
         if (os.path.getsize(from_folder+"/"+i))>min_size:
             with open (from_folder+"/"+i, "rb") as myfile:
-                header=str(myfile.read(24))
+                header=myfile.read(24)
+                header = str(binascii.hexlify(header))[2:-1]
+                # print (header)
             for y in temp_matrix:
-                if y[0] in folder_list and y[1] in header:
+                if re.match(y[1], header):
                     shutil.move (from_folder+"/"+i,to_folder+y[2]+i+y[3])
                     not_recognized = False
                     break
