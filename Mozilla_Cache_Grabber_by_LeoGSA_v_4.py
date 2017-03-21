@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © LeoGSA - Sergey Grigoriev
+# © LeoGSA - Sergey Grigoriev (leogsa@gmail.com)
 
 ## Mozilla (or any other browser) cache grabber by LeoGSA (leogsa@gmail.com)
 ##
